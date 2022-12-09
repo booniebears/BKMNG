@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.csy.dao.AdminMapper">
+    <!--增加一名学生-->
+    <insert id="addStudent" parameterType="Student">
+        insert into bk_mng.student(id, name, sex, birth, student_password)
+        values (#{id}, #{name}, #{sex}, #{birth}, #{student_password});
+    </insert>
+
+    <!--根据id,删除一名学生-->
+    <delete id="deleteStudentById" parameterType="String">
+        delete
+        from bk_mng.student
+        where id = #{student_id};
+    </delete>
+
+    <!--更新一名学生信息-->
+    <update id="updateStudent" parameterType="Student">
+        update bk_mng.student
+        set id               = #{id},
+            name             = #{name},
+            sex              = #{sex},
+            birth            = #{birth},
+            student_password = #{student_password}
+        where id = #{id};
+    </update>
+
+    <!--根据id,查询一名学生-->
+    <select id="queryStudentById" resultType="Student">
+        select *
+        from bk_mng.student
+        where id = #{student_id};
+    </select>
+
+    <!--查询所有学生-->
+    <select id="queryAllStudents" resultType="Student">
+        select *
+        from bk_mng.student;
+    </select>
+
+    <!--根据名字查询学生-->
+    <select id="queryStudentByName" resultType="Student">
+        select *
+        from bk_mng.student
+        where name = #{student_name};
+    </select>
+
+    <!--根据名字查询管理者-->
+    <select id="queryAdminByName" resultType="Admin">
+        select *
+        from bk_mng.admin
+        where admin_name = #{admin_name};
+    </select>
+
+    <!--查询所有借阅信息-->
+    <select id="queryAllBorrowInfo" resultType="BorrowInfo">
+        select *
+        from bk_mng.borrowinfo;
+    </select>
+
+</mapper>

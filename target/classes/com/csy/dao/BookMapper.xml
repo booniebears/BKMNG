@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.csy.dao.BookMapper">
+    <!--增加一本书-->
+    <insert id="addBook" parameterType="Books">
+        insert into bk_mng.book(book_id, book_name, book_author, book_publisher, book_price, book_number)
+        values (#{book_id}, #{book_name}, #{book_author}, #{book_publisher}, #{book_price}, #{book_number});
+    </insert>
+
+    <!--根据id,删除一本书-->
+    <delete id="deleteBookById" parameterType="String">
+        delete
+        from bk_mng.book
+        where book_id = #{book_id};
+    </delete>
+
+    <!--更新一本书-->
+    <update id="updateBook" parameterType="Books">
+        update bk_mng.book
+        set book_id        = #{book_id},
+            book_name      = #{book_name},
+            book_author    = #{book_author},
+            book_publisher = #{book_publisher},
+            book_price     = #{book_price},
+            book_number    = #{book_number}
+        where book_id = #{book_id};
+    </update>
+
+    <!--根据ID查询一本书-->
+    <select id="queryBookById" resultType="Books">
+        select *
+        from bk_mng.book
+        where book_id = #{book_id};
+    </select>
+
+    <!--查询所有书籍-->
+    <select id="queryAllBooks" resultType="Books">
+        select *
+        from bk_mng.book;
+    </select>
+
+    <!--根据名字查询图书-->
+    <select id="queryBooksByName" resultType="Books">
+        select *
+        from book
+        where book_name = #{name};
+    </select>
+
+</mapper>
