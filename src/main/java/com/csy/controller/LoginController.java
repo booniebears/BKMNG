@@ -29,7 +29,7 @@ public class LoginController {
                 return "redirect:/book/allBook";
             } else if (isAdmin == null && adminService.StuLogin(username, password)) {
                 session.setAttribute("UserLoginInfo", username);
-                return "StuMain";
+                return "redirect:/student/allBook";
             } else {
                 model.addAttribute("login_error", "用户名或密码错误");
             }

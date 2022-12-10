@@ -90,7 +90,7 @@ public class AdminController {
 
     //管理员可以查看迄今为止所有的图书借阅信息
     @RequestMapping("/borrowInfo")
-    public String queryAllBorrowInfo(Model model, HttpServletRequest req) throws ParseException {
+    public String queryAllBorrowInfo(Model model, HttpServletRequest req) {
         List<BorrowInfo> list = adminService.queryAllBorrowInfo();
         //一处补丁。如果将生日日期定义为String类型,似乎从SQL的Datetime转换过来之后，会多一个".0"在末尾。
         //故这里字符串处理一下
