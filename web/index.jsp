@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>首页</title>
+    <title>登录页面</title>
     <style>
         * {
             margin: 0;
@@ -46,7 +46,7 @@
             font-size: 15px;
             outline: none;
         }
-        .input-item:placeholder {
+        .input-item::placeholder {
             text-transform: uppercase;
         }
         .btn {

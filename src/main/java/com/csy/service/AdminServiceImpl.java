@@ -54,13 +54,22 @@ public class AdminServiceImpl implements AdminService {
         return false;
     }
 
-//    @Override
-//    public Admin queryAdminByName(String name) {
-//        return adminMapper.queryAdminByName(name);
-//    }
+    @Override
+    public Boolean StuLogin(String name, String password) {
+        Student student = adminMapper.queryStudentByName(name);
+        if (student != null) {
+            return student.getStudent_password().equals(password);
+        }
+        return false;
+    }
 
     @Override
     public List<BorrowInfo> queryAllBorrowInfo() {
         return adminMapper.queryAllBorrowInfo();
+    }
+
+    @Override
+    public List<BorrowInfo> queryStudentBorrowInfo(String name) {
+        return adminMapper.queryStudentBorrowInfo(name);
     }
 }

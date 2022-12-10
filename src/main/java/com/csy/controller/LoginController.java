@@ -27,11 +27,13 @@ public class LoginController {
             if (isAdmin != null && adminService.login(username, password)) {
                 session.setAttribute("UserLoginInfo", username);
                 return "redirect:/book/allBook";
+            } else if (isAdmin == null && adminService.StuLogin(username, password)) {
+                session.setAttribute("UserLoginInfo", username);
+                return "StuMain";
             } else {
                 model.addAttribute("login_error", "用户名或密码错误");
             }
         }
-
         return "redirect:/";
     }
 }

@@ -3,6 +3,7 @@ package com.csy.service;
 import com.csy.pojo.Admin;
 import com.csy.pojo.BorrowInfo;
 import com.csy.pojo.Student;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -20,8 +21,12 @@ public interface AdminService {
 
     Student queryStudentByName(String name); //根据名字查询学生
 
-    //    Admin queryAdminByName(String name);
-    Boolean login(String name, String password); //登录业务
+    Boolean login(String name, String password); //管理员登录
+
+    Boolean StuLogin(String name, String password); //学生登录
 
     List<BorrowInfo> queryAllBorrowInfo(); //查询所有借阅信息
+
+    List<BorrowInfo> queryStudentBorrowInfo(String name); //根据学生姓名，查询其所对应的借阅信息
+
 }

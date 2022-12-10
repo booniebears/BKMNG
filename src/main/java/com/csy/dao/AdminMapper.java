@@ -25,4 +25,6 @@ public interface AdminMapper {
     Admin queryAdminByName(@Param("admin_name") String name);
 
     List<BorrowInfo> queryAllBorrowInfo(); //查询所有借阅信息
+
+    List<BorrowInfo> queryStudentBorrowInfo(@Param("student_name") String name); //根据学生姓名，查询其所对应的借阅信息
 }

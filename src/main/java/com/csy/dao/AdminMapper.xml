@@ -61,4 +61,11 @@
         from bk_mng.borrowinfo;
     </select>
 
+    <!--根据学生姓名，查询其所对应的借阅信息。这里设计了一个视图-->
+    <select id="queryStudentBorrowInfo" resultType="BorrowInfo">
+        select *
+        from bk_mng.stu_borrowinfoview
+        where name = #{student_name};
+    </select>
+
 </mapper>
