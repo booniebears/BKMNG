@@ -49,4 +49,14 @@ public class BookServiceImpl implements BookService {
     public void borrowBook(Map<String, Object> hashMap) {
         bookMapper.borrowBook(hashMap);
     }
+
+    @Override
+    public void returnBook(Map<String, Object> hashMap) {
+        bookMapper.returnBook(hashMap);
+    }
+
+    @Override
+    public void renewBook(Map<String, Object> hashMap) {
+        bookMapper.renewBook(hashMap);
+    }
 }

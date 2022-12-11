@@ -95,7 +95,7 @@
                 </c:forEach>
                 </tbody>
             </table>
-            <span style="color: red;font-weight: bold">
+            <span style="color: red;font-weight: bold;font-size: 20px">
                 ${borrowError}
             </span>
         </div>

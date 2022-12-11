@@ -66,11 +66,90 @@ public class StudentController {
         if (username != null) {
             model.addAttribute("UserLoginInfo", username);
         }
-        /*
-         * queryStudentBorrowInfo得到的数据结构不应该是BorrowInfo，
-         * 似乎需要重新定义。恐怕需要在pojo中新增一项了
-         * */
         List<StuBorrowInfo> list = adminService.queryStudentBorrowInfo(username);
+
+        list = MyDateFormatter(list); //对每一项日期部分作格式化
+        model.addAttribute("Info_list", list);
+        return "StuBorrowInfo";
+    }
+
+    @RequestMapping("/borrowBook/{bk_id}")
+    public String borrowBook(@PathVariable("bk_id") String book_id, HttpServletRequest req,
+                             Model model) {
+        HttpSession session = req.getSession();
+        String username = (String) session.getAttribute("UserLoginInfo");
+        Student student = adminService.queryStudentByName(username);
+        //给借书过程传参,这里使用Map将所有in/out参数打包传入.out部分可以先赋值为Null
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("stu_id", student.getId());
+        hashMap.put("bk_id", book_id);
+        hashMap.put("message", null);
+
+        bookService.borrowBook(hashMap);
+
+        //调用完毕之后,看一下hashMap的out参数状况
+        Integer message = (Integer) hashMap.get("message");
+        //如果库存不足
+        if (message == -1) {
+            model.addAttribute("borrowError", "库存不足!");
+            List<Books> list = bookService.queryAllBooks();
+            model.addAttribute("list", list);
+            return "StuAllBook";
+        }
+        //之前考虑了图书不存在的情况,不过目前看来,如果结合前端设计,可能并不是很有必要。下面就是借阅成功,跳转到BorrowInfo
+        return "redirect:/student/borrowInfo";
+    }
+
+    @RequestMapping("/returnBook/{borrow_id}")
+    public String returnBook(@PathVariable("borrow_id") String borrowID,
+                             Model model,HttpServletRequest req) {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("borrowID", borrowID);
+        hashMap.put("message", null);
+
+        bookService.returnBook(hashMap);
+
+        Integer message = (Integer) hashMap.get("message");
+        //这里专门处理不能重复归还的情况。设计存储过程的时候还考虑了没有此书借阅记录的情况，在这里应该不用考虑
+        if(message == -1){
+            model.addAttribute("returnError","已经归还!");
+            HttpSession session = req.getSession();
+            String username = (String) session.getAttribute("UserLoginInfo");
+
+            List<StuBorrowInfo> list = adminService.queryStudentBorrowInfo(username);
+            list = MyDateFormatter(list); //对每一项日期部分作格式化
+
+            model.addAttribute("Info_list", list);
+            return "StuBorrowInfo";
+        }
+        return "redirect:/student/borrowInfo";
+    }
+
+    @RequestMapping("/renewBook/{borrow_id}")
+    public String renewBook(@PathVariable("borrow_id") String borrowID,
+                            Model model,HttpServletRequest req){
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("borrowID", borrowID);
+        hashMap.put("message", null);
+
+        bookService.renewBook(hashMap);
+
+        Integer message = (Integer) hashMap.get("message");
+        if(message == -1){
+            model.addAttribute("returnError","已经归还!");
+            HttpSession session = req.getSession();
+            String username = (String) session.getAttribute("UserLoginInfo");
+
+            List<StuBorrowInfo> list = adminService.queryStudentBorrowInfo(username);
+            list = MyDateFormatter(list); //对每一项日期部分作格式化
+
+            model.addAttribute("Info_list", list);
+            return "StuBorrowInfo";
+        }
+        return "redirect:/student/borrowInfo";
+    }
+
+    public List<StuBorrowInfo> MyDateFormatter(List<StuBorrowInfo> list){
         //一处补丁。如果将生日日期定义为String类型,似乎从SQL的Datetime转换过来之后，会多一个".0"在末尾。
         //故这里字符串处理一下
         for (StuBorrowInfo borrowInfo : list) {
@@ -91,35 +170,6 @@ public class StudentController {
                 borrowInfo.setRenew_time(split[0]);
             }
         }
-        model.addAttribute("Info_list", list);
-        return "StuBorrowInfo";
+        return list;
     }
-
-    @RequestMapping("/borrowBook/{bk_id}")
-    public String borrowBook(@PathVariable("bk_id") String book_id, HttpServletRequest req,
-                             Model model) {
-        HttpSession session = req.getSession();
-        String username = (String) session.getAttribute("UserLoginInfo");
-        Student student = adminService.queryStudentByName(username);
-        //给借书过程传参,这里使用Map将所有in/out参数打包传入.out部分可以先赋值为Null
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("stu_id", student.getId());
-        hashMap.put("bk_id", book_id);
-        hashMap.put("message", null);
-
-        bookService.borrowBook(hashMap);
-        //调用完毕之后,看一下hashMap的out参数状况
-        Integer message = (Integer) hashMap.get("message");
-        //如果库存不足
-        if (message == -1) {
-            model.addAttribute("borrowError", "库存不足!");
-            System.out.println("库存不足!!!");
-            List<Books> list = bookService.queryAllBooks();
-            model.addAttribute("list", list);
-            return "StuAllBook";
-        }
-        //之前考虑了图书不存在的情况,不过目前看来,如果结合前端设计,可能并不是很有必要。下面就是借阅成功,跳转到BorrowInfo
-        return "redirect:/student/borrowInfo";
-    }
-
 }

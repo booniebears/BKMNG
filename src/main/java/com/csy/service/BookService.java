@@ -21,4 +21,8 @@ public interface BookService {
     Books queryBooksByName(String name); //根据名字查询图书
 
     void borrowBook(Map<String, Object> hashMap); //借书过程
+
+    void returnBook(Map<String, Object> hashMap); //还书过程
+
+    void renewBook(Map<String, Object> hashMap); //续借过程
 }

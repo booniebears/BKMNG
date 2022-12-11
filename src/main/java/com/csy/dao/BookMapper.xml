@@ -50,6 +50,7 @@
     </select>
 
     <!--根据学生姓名，查询其所对应的借阅信息。这里设计了一个视图-->
+    <!--借书过程-->
     <select id="borrowBook" statementType="CALLABLE" parameterType="java.util.Map" resultType="java.util.Map">
         call borrow_book(
                 #{stu_id,mode=IN,jdbcType=CHAR},
@@ -57,4 +58,21 @@
                 #{message,mode=OUT,jdbcType=INTEGER}
             );
     </select>
+
+    <!--还书过程-->
+    <select id="returnBook" statementType="CALLABLE" parameterType="java.util.Map" resultType="java.util.Map">
+        call return_book(
+                #{borrowID,mode=IN,jdbcType=INTEGER},
+                #{message,mode=OUT,jdbcType=INTEGER}
+            );
+    </select>
+
+    <!--续借过程-->
+    <select id="renewBook" statementType="CALLABLE" parameterType="java.util.Map" resultType="java.util.Map">
+        call renew_book(
+                #{borrowID,mode=IN,jdbcType=INTEGER},
+                #{message,mode=OUT,jdbcType=INTEGER}
+            );
+    </select>
+
 </mapper>

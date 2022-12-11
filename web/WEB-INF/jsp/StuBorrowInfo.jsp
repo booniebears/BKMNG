@@ -49,19 +49,6 @@
         </div>
     </div>
 
-    <%--    <div class="row clearfix">--%>
-    <%--        <form class="navbar-form navbar-left" action="${pageContext.request.contextPath}/book/queryBook"--%>
-    <%--              method="post" role="search" autocomplete="off">--%>
-    <%--            <div class="form-group">--%>
-    <%--                <input type="text" class="form-control" name="queryBookName" placeholder="请输入要查询的书籍名称">--%>
-    <%--            </div>--%>
-    <%--            <button type="submit" class="btn btn-default">搜索</button>--%>
-    <%--            <span style="color: red;font-weight: bold">--%>
-    <%--                ${error}--%>
-    <%--            </span>--%>
-    <%--        </form>--%>
-    <%--    </div>--%>
-
     <div class="row clearfix">
         <div class="col-md-12 column">
             <table class="table table-hover table-bordered">
@@ -84,14 +71,17 @@
                         <td class="warning">${info.return_time}</td>
                         <td bgcolor="#e0ffff">${info.renew_time}</td>
                         <td class="warning">
-                            <a href="${pageContext.request.contextPath}/student/returnBook">还书</a>
+                            <a href="${pageContext.request.contextPath}/student/returnBook/${info.borrow_id}">还书</a>
                             &nbsp; | &nbsp;
-                            <a href="${pageContext.request.contextPath}/student/renewBook">续借</a>
+                            <a href="${pageContext.request.contextPath}/student/renewBook/${info.borrow_id}">续借</a>
                         </td>
                     </tr>
                 </c:forEach>
                 </tbody>
             </table>
+            <span style="color: red;font-weight: bold;font-size: 20px">
+                ${returnError}
+            </span>
         </div>
 
     </div>
