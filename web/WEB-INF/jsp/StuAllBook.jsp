@@ -87,7 +87,7 @@
                         <td bgcolor="#e0ffff">${book.book_price}</td>
                         <td class="warning">${book.book_number}</td>
                         <td bgcolor="#e0ffff">
-                            <a href="${pageContext.request.contextPath}/book/updateBookPage?id=${book.book_id}">借书</a>
+                            <a href="${pageContext.request.contextPath}/student/borrowBook/${book.book_id}">借书</a>
 <%--                            &nbsp; | &nbsp;--%>
 <%--                            <a href="${pageContext.request.contextPath}/book/deleteBook/${book.book_id}">删除</a>--%>
                         </td>
@@ -95,6 +95,9 @@
                 </c:forEach>
                 </tbody>
             </table>
+            <span style="color: red;font-weight: bold">
+                ${borrowError}
+            </span>
         </div>
 
     </div>

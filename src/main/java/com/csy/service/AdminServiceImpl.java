@@ -3,6 +3,7 @@ package com.csy.service;
 import com.csy.dao.AdminMapper;
 import com.csy.pojo.Admin;
 import com.csy.pojo.BorrowInfo;
+import com.csy.pojo.StuBorrowInfo;
 import com.csy.pojo.Student;
 
 import java.util.List;
@@ -69,7 +70,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public List<BorrowInfo> queryStudentBorrowInfo(String name) {
+    public List<StuBorrowInfo> queryStudentBorrowInfo(String name) {
         return adminMapper.queryStudentBorrowInfo(name);
     }
 }

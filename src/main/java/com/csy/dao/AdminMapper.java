@@ -1,12 +1,10 @@
 package com.csy.dao;
 
-import com.csy.pojo.Admin;
-import com.csy.pojo.Books;
-import com.csy.pojo.BorrowInfo;
-import com.csy.pojo.Student;
+import com.csy.pojo.*;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface AdminMapper {
     int addStudent(Student student); //增加一名学生
@@ -26,5 +24,6 @@ public interface AdminMapper {
 
     List<BorrowInfo> queryAllBorrowInfo(); //查询所有借阅信息
 
-    List<BorrowInfo> queryStudentBorrowInfo(@Param("student_name") String name); //根据学生姓名，查询其所对应的借阅信息
+    List<StuBorrowInfo> queryStudentBorrowInfo(@Param("student_name") String name); //根据学生姓名，查询其所对应的借阅信息
+
 }

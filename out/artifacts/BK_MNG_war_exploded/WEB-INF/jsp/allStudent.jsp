@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>学生列表</title>
+    <title>人员管理</title>
     <!-- 引入 Bootstrap -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>

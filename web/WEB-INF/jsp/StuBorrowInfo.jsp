@@ -68,22 +68,26 @@
                 <thead>
                 <tr>
                     <th bgcolor="#e0ffff">借阅编号</th>
-                    <th class="warning">读者编号</th>
-                    <th bgcolor="#e0ffff">图书编号</th>
-                    <th class="warning">借书时间</th>
-                    <th bgcolor="#e0ffff">还书时间</th>
-                    <th class="warning">续借时间</th>
+                    <th class="warning">图书名</th>
+                    <th bgcolor="#e0ffff">借书时间</th>
+                    <th class="warning">还书时间</th>
+                    <th bgcolor="#e0ffff">续借时间</th>
+                    <th class="warning">操作</th>
                 </tr>
                 </thead>
                 <tbody>
                 <c:forEach var="info" items="${Info_list}">
                     <tr>
                         <td bgcolor="#e0ffff">${info.borrow_id}</td>
-                        <td class="warning">${info.id}</td>
-                        <td bgcolor="#e0ffff">${info.book_id}</td>
-                        <td class="warning">${info.borrow_time}</td>
-                        <td bgcolor="#e0ffff">${info.return_time}</td>
-                        <td class="warning">${info.renew_time}</td>
+                        <td class="warning">${info.book_name}</td>
+                        <td bgcolor="#e0ffff">${info.borrow_time}</td>
+                        <td class="warning">${info.return_time}</td>
+                        <td bgcolor="#e0ffff">${info.renew_time}</td>
+                        <td class="warning">
+                            <a href="${pageContext.request.contextPath}/student/returnBook">还书</a>
+                            &nbsp; | &nbsp;
+                            <a href="${pageContext.request.contextPath}/student/renewBook">续借</a>
+                        </td>
                     </tr>
                 </c:forEach>
                 </tbody>

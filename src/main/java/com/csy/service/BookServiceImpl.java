@@ -4,6 +4,7 @@ import com.csy.dao.BookMapper;
 import com.csy.pojo.Books;
 
 import java.util.List;
+import java.util.Map;
 
 
 public class BookServiceImpl implements BookService {
@@ -42,5 +43,10 @@ public class BookServiceImpl implements BookService {
     @Override
     public Books queryBooksByName(String name) {
         return bookMapper.queryBooksByName(name);
+    }
+
+    @Override
+    public void borrowBook(Map<String, Object> hashMap) {
+        bookMapper.borrowBook(hashMap);
     }
 }

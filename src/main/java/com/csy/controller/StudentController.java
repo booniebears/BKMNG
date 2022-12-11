@@ -1,19 +1,22 @@
 package com.csy.controller;
 
 import com.csy.pojo.Books;
-import com.csy.pojo.BorrowInfo;
+import com.csy.pojo.StuBorrowInfo;
+import com.csy.pojo.Student;
 import com.csy.service.AdminService;
 import com.csy.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Controller
@@ -64,13 +67,13 @@ public class StudentController {
             model.addAttribute("UserLoginInfo", username);
         }
         /*
-        * queryStudentBorrowInfo得到的数据结构不应该是BorrowInfo，
-        * 似乎需要重新定义。恐怕需要在pojo中新增一项了
-        * */
-        List<BorrowInfo> list = adminService.queryStudentBorrowInfo(username);
+         * queryStudentBorrowInfo得到的数据结构不应该是BorrowInfo，
+         * 似乎需要重新定义。恐怕需要在pojo中新增一项了
+         * */
+        List<StuBorrowInfo> list = adminService.queryStudentBorrowInfo(username);
         //一处补丁。如果将生日日期定义为String类型,似乎从SQL的Datetime转换过来之后，会多一个".0"在末尾。
         //故这里字符串处理一下
-        for (BorrowInfo borrowInfo : list) {
+        for (StuBorrowInfo borrowInfo : list) {
             String[] split = null;
             String borrow_time = borrowInfo.getBorrow_time();
             if (borrow_time != null) {
@@ -90,6 +93,33 @@ public class StudentController {
         }
         model.addAttribute("Info_list", list);
         return "StuBorrowInfo";
+    }
+
+    @RequestMapping("/borrowBook/{bk_id}")
+    public String borrowBook(@PathVariable("bk_id") String book_id, HttpServletRequest req,
+                             Model model) {
+        HttpSession session = req.getSession();
+        String username = (String) session.getAttribute("UserLoginInfo");
+        Student student = adminService.queryStudentByName(username);
+        //给借书过程传参,这里使用Map将所有in/out参数打包传入.out部分可以先赋值为Null
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("stu_id", student.getId());
+        hashMap.put("bk_id", book_id);
+        hashMap.put("message", null);
+
+        bookService.borrowBook(hashMap);
+        //调用完毕之后,看一下hashMap的out参数状况
+        Integer message = (Integer) hashMap.get("message");
+        //如果库存不足
+        if (message == -1) {
+            model.addAttribute("borrowError", "库存不足!");
+            System.out.println("库存不足!!!");
+            List<Books> list = bookService.queryAllBooks();
+            model.addAttribute("list", list);
+            return "StuAllBook";
+        }
+        //之前考虑了图书不存在的情况,不过目前看来,如果结合前端设计,可能并不是很有必要。下面就是借阅成功,跳转到BorrowInfo
+        return "redirect:/student/borrowInfo";
     }
 
 }

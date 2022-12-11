@@ -2,6 +2,7 @@ package com.csy.service;
 
 import com.csy.pojo.Admin;
 import com.csy.pojo.BorrowInfo;
+import com.csy.pojo.StuBorrowInfo;
 import com.csy.pojo.Student;
 import org.apache.ibatis.annotations.Param;
 
@@ -27,6 +28,6 @@ public interface AdminService {
 
     List<BorrowInfo> queryAllBorrowInfo(); //查询所有借阅信息
 
-    List<BorrowInfo> queryStudentBorrowInfo(String name); //根据学生姓名，查询其所对应的借阅信息
+    List<StuBorrowInfo> queryStudentBorrowInfo(String name); //根据学生姓名，查询其所对应的借阅信息
 
 }

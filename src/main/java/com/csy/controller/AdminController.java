@@ -46,7 +46,7 @@ public class AdminController {
     }
 
     @RequestMapping("/addStudent")
-    public String addStudent(Student student, HttpServletRequest req) {
+    public String addStudent(Student student) {
         adminService.addStudent(student);
         return "redirect:/admin/allStudent";
     }

@@ -49,4 +49,12 @@
         where book_name = #{name};
     </select>
 
+    <!--根据学生姓名，查询其所对应的借阅信息。这里设计了一个视图-->
+    <select id="borrowBook" statementType="CALLABLE" parameterType="java.util.Map" resultType="java.util.Map">
+        call borrow_book(
+                #{stu_id,mode=IN,jdbcType=CHAR},
+                #{bk_id,mode=IN,jdbcType=CHAR},
+                #{message,mode=OUT,jdbcType=INTEGER}
+            );
+    </select>
 </mapper>

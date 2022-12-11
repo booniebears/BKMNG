@@ -4,6 +4,7 @@ import com.csy.pojo.Books;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Map;
 
 public interface BookMapper {
     int addBook(Books books); //增加一本书
@@ -18,4 +19,6 @@ public interface BookMapper {
     List<Books> queryAllBooks(); //查询所有书
 
     Books queryBooksByName(@Param("name") String name); //根据名字查询图书
+
+    void borrowBook(Map<String, Object> hashMap); //借书过程
 }

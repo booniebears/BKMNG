@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>书籍展示</title>
+    <title>图书概览</title>
     <!-- 引入 Bootstrap -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css"/>
