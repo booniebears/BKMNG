@@ -58,14 +58,16 @@
     <!--查询所有借阅信息-->
     <select id="queryAllBorrowInfo" resultType="BorrowInfo">
         select *
-        from bk_mng.borrowinfo;
+        from bk_mng.borrowinfo
+        order by borrow_id desc;
     </select>
 
     <!--根据学生姓名，查询其所对应的借阅信息。这里设计了一个视图-->
     <select id="queryStudentBorrowInfo" resultType="StuBorrowInfo">
         select *
         from bk_mng.stu_borrowinfoview
-        where name = #{student_name};
+        where name = #{student_name}
+        order by borrow_id desc;
     </select>
 
 </mapper>
